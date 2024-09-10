@@ -5,7 +5,7 @@
 ---
 
 # Lua Serialization
-[Lua Serialization](https://github.com/DavidSheh/LuaSerialization) is a lightweight tool for serializing C# objects into Lua code. It allows you to save instance objects in C# as configuration files in Lua code format, making it convenient to use in a Lua environment. This is particularly useful in game development workflows, such as Unity3D + Lua.
+[Lua Serialization](https://github.com/DavidSheh/LuaSerialization) is a lightweight serialization tool for converting C# objects into Lua code. It helps you save instance objects in C# as configuration files in Lua code format, making them easy to use in a Lua environment. This is particularly useful for game development workflows involving Unity3D + Lua.
 
 ## Features
 1. Supports serializing C# objects into Lua code.
