@@ -1,19 +1,25 @@
+<div align="center">
+<p><strong><a href="README.md">English</a> | <a href="https://davidsheh.github.io/post/lua-serialization/">简体中文</a></strong></p>
+</div>
+
+---
+
 # Lua Serialization
-Lua Serialization 是一种用于将 C# 对象序列化为 Lua 代码的工具。它可以帮助你将 C# 中的实例对象保存为 Lua 代码形式的配置文件，方便在 Lua 环境中使用。这在例如 Unity3D + Lua 的游戏开发工作流中非常有用。
+[Lua Serialization](https://github.com/DavidSheh/LuaSerialization) is a lightweight tool for serializing C# objects into Lua code. It allows you to save instance objects in C# as configuration files in Lua code format, making it convenient to use in a Lua environment. This is particularly useful in game development workflows, such as Unity3D + Lua.
 
 ## Features
-1. 支持将 C# 对象序列化成 Lua 代码。
-2. 支持多种数据类型的导出，包括基本类型（int、float、double、bool、string、enum、array），以及复杂类型如 List 和 Dictionary。
-3. 支持忽略某些字段的导出。
-4. 支持序列化前的预处理操作，例如在导出前初始化某些字段。
-5. 支持导出 Lua 原生代码（如 Lua 函数和自定义枚举）。
-6. 自定义导出格式。
+1. Supports serializing C# objects into Lua code.
+2. Supports exporting various data types, including primitive types (int, float, double, bool, string, enum, array), as well as complex types like List and Dictionary.
+3. Supports ignoring specific fields during export.
+4. Supports preprocessing before serialization, such as initializing certain fields before export.
+5. Supports exporting native Lua code (like Lua functions and custom enums).
+6. Customizable export formats.
 
-## 使用说明
+## Instructions
 
-### 基本用法
+### Basic Usage
 
-数据类定义：
+Data class definition:
 ```csharp
 public class People
 {
@@ -27,7 +33,7 @@ public class People
 }
 ```
 
-序列化处理：
+Serialization:
 ```csharp
 People people = new People()
 {
@@ -38,11 +44,11 @@ People people = new People()
     luckyNumbers = new List<int>() { 2, 5, 6, 8, 9 },
     luckyNumberMap = new Dictionary<int, string>()
     {
-        { 2, "好事成双" },
-        { 5, "五福临门" },
-        { 6, "六六大顺" },
-        { 8, "八方来财" },
-        { 9, "长长久久" },
+        { 2, "Good things come in pairs" },
+        { 5, "Five blessings arrive" },
+        { 6, "Smooth sailing" },
+        { 8, "Wealth from all directions" },
+        { 9, "Longevity" },
     },
     description = "Field that is marked as not serialized.",
 };
@@ -51,7 +57,7 @@ string strLua = LuaSerializer.Serialize(people);
 Console.WriteLine(strLua);
 ```
 
-输出结果：
+Output:
 ```lua
 {
     ["id"]=10001,
@@ -66,20 +72,20 @@ Console.WriteLine(strLua);
         9
     },
     ["luckyNumberMap"]={
-        [2]="好事成双",
-        [5]="五福临门",
-        [6]="六六大顺",
-        [8]="八方来财",
-        [9]="长长久久"
+        [2]="Good things come in pairs",
+        [5]="Five blessings arrive",
+        [6]="Smooth sailing",
+        [8]="Wealth from all directions",
+        [9]="Longevity"
     },
 }
 ```
 
-### 进阶用法
-#### 一、序列化前的预处理操作
-通过实现 `IBeforeLuaSerialization` 接口，并在 `OnBeforeLuaSerialize()` 方法中添加预处理逻辑。
+### Advanced Usage
+#### 1. Preprocessing Before Serialization
+Implement the `IBeforeLuaSerialization` interface and add preprocessing logic in the `OnBeforeLuaSerialize()` method.
 
-数据类定义：
+Data class definition:
 ```csharp
 public class People : IBeforeLuaSerialization
 {
@@ -96,7 +102,7 @@ public class People : IBeforeLuaSerialization
 }
 ```
 
-序列化处理：
+Serialization:
 ```csharp
 People people = new People()
 {
@@ -109,7 +115,7 @@ string strLua = LuaSerializer.Serialize(people);
 Console.WriteLine(strLua);
 ```
 
-输出结果：
+Output:
 ```lua
 {
     ["id"]=10002,
@@ -120,10 +126,10 @@ Console.WriteLine(strLua);
 }
 ```
 
-#### 二、Lua 原生代码导出
-需要导出 Lua 原生代码的字段，只需在字符串前加上 `@` 标记。
+#### 2. Exporting Native Lua Code
+For fields that need to export native Lua code, simply prefix the string with `@`.
 
-数据类定义：
+Data class definition:
 ```csharp
 public class People
 {
@@ -134,7 +140,7 @@ public class People
 }
 ```
 
-序列化处理：
+Serialization:
 ```csharp
 People people = new People()
 {
@@ -147,7 +153,7 @@ string strLua = LuaSerializer.Serialize(people);
 Console.WriteLine(strLua);
 ```
 
-输出结果：
+Output:
 ```lua
 {
     ["id"]=10003,
@@ -157,10 +163,10 @@ Console.WriteLine(strLua);
 }
 ```
 
-#### 三、自定义导出格式
-实现 `ILuaSerializable` 接口，并在 `SerializeToLua()` 方法中定义自定义导出逻辑。
+#### 3. Custom Export Format
+Implement the `ILuaSerializable` interface and define custom export logic in the `SerializeToLua()` method.
 
-数据类定义：
+Data class definition:
 ```csharp
 public class People
 {
@@ -182,7 +188,7 @@ public class Child : ILuaSerializable
 }
 ```
 
-序列化处理：
+Serialization:
 ```csharp
 People people = new People()
 {
@@ -204,7 +210,7 @@ string strLua = LuaSerializer.Serialize(people);
 Console.WriteLine(strLua);
 ```
 
-输出结果：
+Output:
 ```lua
 {
     ["id"]=10004,
@@ -216,4 +222,6 @@ Console.WriteLine(strLua);
     }
 }
 ```
- 
+
+## Repository
+A lightweight C# to Lua serialization tool with no third-party dependencies [Lua Serialization](https://github.com/DavidSheh/LuaSerialization): https://github.com/DavidSheh/LuaSerialization.
