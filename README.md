@@ -1,12 +1,12 @@
 # Lua Serialization
-将 C# 对象序列化成 Lua 代码的一种实现。可以用于将 C# 环境中的实例对象保存成 Lua 代码形式的配置文件，以便于在 Lua 环境中使用。比如 用 Unity3D + Lua 的游戏开发工作流中。
+Lua Serialization 是一种用于将 C# 对象序列化为 Lua 代码的工具。它可以帮助你将 C# 中的实例对象保存为 Lua 代码形式的配置文件，方便在 Lua 环境中使用。这在例如 Unity3D + Lua 的游戏开发工作流中非常有用。
 
 ## Features
 1. 支持将 C# 对象序列化成 Lua 代码。
-2. 支持多种数据类型的导出，除基本类型（int、float、double、 bool、string、enum、array）外，还支持 List、Dictionary 等。
+2. 支持多种数据类型的导出，包括基本类型（int、float、double、bool、string、enum、array），以及复杂类型如 List 和 Dictionary。
 3. 支持忽略某些字段的导出。
-4. 支持序列化前的预处理操作，比如导出前初始化某些字段。
-5. 支持 Lua 原生代码导出。比如导出 Lua 函数和自定义枚举。
+4. 支持序列化前的预处理操作，例如在导出前初始化某些字段。
+5. 支持导出 Lua 原生代码（如 Lua 函数和自定义枚举）。
 6. 自定义导出格式。
 
 ## 使用说明
@@ -23,7 +23,7 @@ public class People
     public float weight;
     public List<int> luckyNumbers;
     public Dictionary<int, string> luckyNumberMap;
-    [IgnoreLua]public string description;
+    [IgnoreLua] public string description;
 }
 ```
 
@@ -77,7 +77,7 @@ Console.WriteLine(strLua);
 
 ### 进阶用法
 #### 一、序列化前的预处理操作
-只需要实现 `IBeforeLuaSerialization` 接口，并在 `OnBeforeLuaSerialize()` 方法中实现预处理逻辑即可。
+通过实现 `IBeforeLuaSerialization` 接口，并在 `OnBeforeLuaSerialize()` 方法中添加预处理逻辑。
 
 数据类定义：
 ```csharp
@@ -121,7 +121,7 @@ Console.WriteLine(strLua);
 ```
 
 #### 二、Lua 原生代码导出
-需要 Lua 原生导出的 string 类型字段，只需要在字符串前面使用 `@` 标记即可。
+需要导出 Lua 原生代码的字段，只需在字符串前加上 `@` 标记。
 
 数据类定义：
 ```csharp
@@ -158,7 +158,7 @@ Console.WriteLine(strLua);
 ```
 
 #### 三、自定义导出格式
-自定义导出格式只需要将数据类实现 `ILuaSerializable` 接口，并在 `SerializeToLua()` 方法中实现自定义的导出逻辑即可。
+实现 `ILuaSerializable` 接口，并在 `SerializeToLua()` 方法中定义自定义导出逻辑。
 
 数据类定义：
 ```csharp
