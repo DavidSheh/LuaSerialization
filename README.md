@@ -1,5 +1,5 @@
-# LuaSerialization
-将 C# 对象序列化成 Lua 代码的实现。
+# Lua Serialization
+将 C# 对象序列化成 Lua 代码的一种实现。可以用于将 C# 环境中的实例对象保存成 Lua 代码形式的配置文件，以便于在 Lua 环境中使用。比如 用 Unity3D + Lua 的游戏开发工作流中。
 
 ## Features
 1. 支持将 C# 对象序列化成 Lua 代码。
